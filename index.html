@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spectrum Hub</title>
+</head>
+<body style="background:black;color:white;text-align:center;font-family:Arial">
 
+<h2>Spectrum Hub</h2>
+
+<button onclick="driver()">Driver</button>
+<button onclick="dispatch()">Dispatch</button>
+
+<div id="app"></div>
+
+<script>
+function driver(){
+  app.innerHTML = "Driver Mode Active";
+}
+
+function dispatch(){
+  window.location.href = "/dashboard.html";
+}
+</script>
+
+</body>
+</html>
