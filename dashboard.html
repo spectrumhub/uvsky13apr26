@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dispatch Dashboard</title>
+</head>
+
+<body style="background:black;color:white;font-family:Arial;text-align:center">
+
+<h2>Dispatch Dashboard</h2>
+
+<button onclick="createLoad()">Create Load</button>
+
+<div id="output"></div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "PASTE_SUPABASE_URL";
+const SUPABASE_KEY = "PASTE_SUPABASE_KEY";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function createLoad(){
+  const id = "SH-" + Date.now();
+
+  const { error: loadError } = await supabaseClient
+    .from("loads")
+    .insert([
+      {
+        load_id: id,
+        pickup: "Atlanta",
+        delivery: "Charlotte",
+        status: "NEW"
+      }
+    ]);
+
+  if(loadError){
+    output.innerHTML = "Error creating load";
+    return;
+  }
+
+  await supabaseClient.from("events").insert([
+    { load_id: id, type: "LOAD_CREATED" }
+  ]);
+
+  output.innerHTML = "Load Created: " + id;
+}
+</script>
+
+</body>
+</html>
